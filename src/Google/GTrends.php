@@ -50,14 +50,8 @@ class GTrends
             'ns'    => $ns,
         ];
 
-        try {
-
-            $dataJson = $this->_getData(self::DAILY_SEARCH_TRENDS_ENDPOINT, 'GET', $params);
-            return Json\Json::decode(trim(substr($dataJson, 5)), Json\Json::TYPE_ARRAY);
-        } catch (\Exception $e) {
-
-            die($e->getMessage());
-        }
+        $dataJson = $this->_getData(self::DAILY_SEARCH_TRENDS_ENDPOINT, 'GET', $params);
+        return Json\Json::decode(trim(substr($dataJson, 5)), Json\Json::TYPE_ARRAY);
     }
 
     /**
@@ -83,14 +77,8 @@ class GTrends
             'sort'  => $sort,
         ];
 
-        try {
-
-            $dataJson = $this->_getData(self::REAL_TIME_SEARCH_TRENDS_ENDPOINT, 'GET', $params);
-            return Json\Json::decode(trim(substr($dataJson, 5)), Json\Json::TYPE_ARRAY);
-        } catch (\Exception $e) {
-
-            die($e->getMessage());
-        }
+        $dataJson = $this->_getData(self::REAL_TIME_SEARCH_TRENDS_ENDPOINT, 'GET', $params);
+        return Json\Json::decode(trim(substr($dataJson, 5)), Json\Json::TYPE_ARRAY);
     }
 
     /**
@@ -512,11 +500,7 @@ class GTrends
    */
     public function interestBySubregion(array $keyWordList, $category=0, $time='now 1-h', $property='', $sleep=0.5, $disableTimeParsing = false)
     {
-        try {
-            return $this->_interestBySubregion($keyWordList, 'SUBREGION', $category, $time, $property, $sleep, $disableTimeParsing);
-        } catch (\Exception $e) {
-            die($e->getMessage());
-        }
+        return $this->_interestBySubregion($keyWordList, 'SUBREGION', $category, $time, $property, $sleep, $disableTimeParsing);
     }
 
   /**
@@ -531,11 +515,7 @@ class GTrends
    */
     public function interestByCity(array $keyWordList, $category=0, $time='now 1-h', $property='', $sleep=0.5, $disableTimeParsing = false)
     {
-        try {
-            return $this->_interestBySubregion($keyWordList, 'CITY', $category, $time, $property, $sleep, $disableTimeParsing);
-        } catch (\Exception $e) {
-            die($e->getMessage());
-        }
+        return $this->_interestBySubregion($keyWordList, 'CITY', $category, $time, $property, $sleep, $disableTimeParsing);
     }
 
   /**
@@ -550,11 +530,7 @@ class GTrends
    */
     public function interestByMetro(array $keyWordList, $category=0, $time='now 1-h', $property='', $sleep=0.5, $disableTimeParsing = false)
     {
-        try {
-            return $this->_interestBySubregion($keyWordList, 'DMA', $category, $time, $property, $sleep, $disableTimeParsing);
-        } catch (\Exception $e) {
-            die($e->getMessage());
-        }
+        return $this->_interestBySubregion($keyWordList, 'DMA', $category, $time, $property, $sleep, $disableTimeParsing);
     }
 
   /**
@@ -569,11 +545,7 @@ class GTrends
    */
     public function interestByRegion(array $keyWordList, $category=0, $time='now 1-h', $property='', $sleep=0.5, $disableTimeParsing = false)
     {
-        try {
-            return $this->_interestBySubregion($keyWordList, 'REGION', $category, $time, $property, $sleep, $disableTimeParsing);
-        } catch (\Exception $e) {
-            die($e->getMessage());
-        }
+        return $this->_interestBySubregion($keyWordList, 'REGION', $category, $time, $property, $sleep, $disableTimeParsing);
     }
 
 
@@ -651,8 +623,8 @@ class GTrends
     {
         if ($method != 'GET' AND $method != 'POST') {
 
-            # throw new \Exception(__METHOD__ . " $method method not allowed");
-            die(__METHOD__ . " $method method not allowed");
+            throw new \Exception(__METHOD__ . " $method method not allowed");
+            // die(__METHOD__ . " $method method not allowed");
         }
 
         $client = new Http\Client();
