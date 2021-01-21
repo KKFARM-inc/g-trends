@@ -108,10 +108,7 @@ class GTrends
             $keyWordList = [$keyWordList];
         }
 
-        $timeInfo = explode('-', $time);
-        $timeInfo[0] = strtolower($timeInfo[0]);
-        $timeInfo[1] = strtolower($timeInfo[1]);
-        $time = implode('-', $timeInfo);
+        $time = $this->timeConverter($time);
 
         if (null === $keyWordList) {
             $comparisonItem[] = ['geo' => $this->options['geo'], 'time' => $time];
@@ -195,10 +192,7 @@ class GTrends
             $keyWordList = [$keyWordList];
         }
 
-        $timeInfo = explode('-', $time);
-        $timeInfo[0] = strtolower($timeInfo[0]);
-        $timeInfo[1] = strtolower($timeInfo[1]);
-        $time = implode('-', $timeInfo);
+        $time = $this->timeConverter($time);
 
         if (null === $keyWordList) {
             $comparisonItem[] = ['geo' => $this->options['geo'], 'time' => $time];
@@ -336,6 +330,8 @@ class GTrends
      */
     public function interestOverTime($kWord, $category=0, $time='now 4-H', $property='')
     {
+        $time = $this->timeConverter($time);
+
         $payload = [
             'hl' => $this->options['hl'],
             'tz' => $this->options['tz'],
@@ -389,10 +385,7 @@ class GTrends
      */
     public function getRelatedTopics($kWord=null, $category=0, $time='today 12-m', $property='')
     {
-        $timeInfo = explode('-', $time);
-        $timeInfo[0] = strtolower($timeInfo[0]);
-        $timeInfo[1] = strtolower($timeInfo[1]);
-        $time = implode('-', $timeInfo);
+        $time = $this->timeConverter($time);
 
         if (null === $kWord) {
             $comparisonItem[] = ['geo' => $this->options['geo'], 'time' => $time];
@@ -453,11 +446,7 @@ class GTrends
         }
 
         if(!$disableTimeParsing) {
-          $timeInfo = explode('-', $time);
-          $timeInfo[0] = strtolower($timeInfo[0]);
-          $timeUnit = array_pop($timeInfo);
-          $timeInfo[] = strtoupper($timeUnit);
-          $time = implode('-', $timeInfo);
+            $time = $this->timeConverter($time);
         }
 
         $comparisonItem = [];
@@ -727,5 +716,21 @@ class GTrends
             }
         }
         return false;
+    }
+
+    /**
+     * @param string $time
+     * @return string
+     */
+    protected function timeConverter(string $time)
+    {
+        $uppercaseList = ['h', 'H'];
+
+        $timeInfo = explode('-', $time);
+        $timeInfo[0] = strtolower($timeInfo[0]);
+        $timeInfo[1] = (in_array($timeInfo[1],  $timeUppercaseList)) ? strtoupper($timeInfo[1]) : strtolower($timeInfo[1]);
+        $time = implode('-', $timeInfo);
+
+        return $time;
     }
 }
