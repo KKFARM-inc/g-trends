@@ -700,7 +700,7 @@ class GTrends
 
         $timeInfo = explode('-', $time);
         $timeInfo[0] = strtolower($timeInfo[0]);
-        $timeInfo[1] = (in_array($timeInfo[1],  $timeUppercaseList)) ? strtoupper($timeInfo[1]) : strtolower($timeInfo[1]);
+        $timeInfo[1] = (in_array($timeInfo[1],  $uppercaseList)) ? strtoupper($timeInfo[1]) : strtolower($timeInfo[1]);
         $time = implode('-', $timeInfo);
 
         return $time;
